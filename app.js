@@ -3,7 +3,7 @@ const connect = require("./schemas");
 const app = express();
 const port = 3000;
 
-const postRouter = require("./routes/post");
+const postRouter = require("./routes/posts");
 
 const requestMiddleware = (req, res, next) => {
     console.log("Request URL:", req.originalUrl, "-", new Date());
