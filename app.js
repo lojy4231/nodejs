@@ -10,7 +10,9 @@ const requestMiddleware = (req, res, next) => {
     next();
 };
 
+app.use(express.json());
 app.use(requestMiddleware);
+
 app.use("/api", [postRouter]);
 
 app.get("/", (req, res) => {
