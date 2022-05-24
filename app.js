@@ -10,6 +10,8 @@ const requestMiddleware = (req, res, next) => {
     next();
 };
 
+connect();
+
 app.use(express.json());
 app.use(requestMiddleware);
 

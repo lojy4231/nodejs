@@ -7,7 +7,7 @@
         - URL: /post
     - Response
         - Status code: 200
-        - Payload: { title: string, userId: string, date: number, post_unm: number.sort }[]
+        - Payload: { title: string, userId: string, date: number, post_unm: number }[]
 
 - 게시글 상세 조회
     제목, 작성자명, 작성 날짜, 작성 내용을 조회하기
