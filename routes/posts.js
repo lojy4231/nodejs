@@ -6,37 +6,6 @@ router.get("/", (req, res) => {
     res.send("this is post page")
 });
 
-// const posts = [
-//     {
-//         postNum: 1,
-//         title: "test1",
-//         userId: "test1",
-//         date: "2022-05-23",
-//         content: "test1",
-//     },
-//     {
-//         postNum: 2,
-//         title: "test2",
-//         userId: "test2",
-//         date: "2022-05-23",
-//         content: "test2",
-//     },
-//     {
-//         postNum: 3,
-//         title: "test3",
-//         userId: "test3",
-//         date: "2022-05-23",
-//         content: "test3",
-//     },
-//     {
-//         postNum: 4,
-//         title: "test4",
-//         userId: "test4",
-//         date: "2022-05-23",
-//         content: "tes4",
-//     },
-// ];
-
 router.get("/posts", async (req, res) => {
     const { title } = req.query;
 
@@ -47,14 +16,38 @@ router.get("/posts", async (req, res) => {
     });
 });
 
-router.get("/posts/:postNum", (req, res) => {
+router.get("/posts/:postNum", async (req, res) => {
     const { postNum } = req.params;
-    const [detail] = Post.find({ postNum: Number(postNum) });
+
+    const [detail] = await Post.find({ postNum: Number(postNum) });
 	res.json({ 
         detail,
     });
 });
 
+router.delete("/posts/:postNum", async (req, res) => {
+    const { postNum } = req.params;
+    
+    const existPost = await Post.find({ postNum: Number(postNum) });
+    if(existPost.length){
+        await Post.deleteOne({ postNum: Number(postNum) });
+    }
+    
+    res.json({ success: true });
+});
+
+router.put("/posts/:postNum", async (req, res) => {
+    const { postNum } = req.params;
+    const { content } = req.body;
+
+    const existPost = await Post.find({  postNum: Number(postNum) });
+    if(existPost.length){
+        await Post.updateOne({ postNum: Number(postNum) }, { $set: { content }});
+    }
+
+    res.json({ success: true });
+});
+    
 router.post("/posting", async (req, res) => {
     const { postNum, title, userId, password, date, content } = req.body;
 
