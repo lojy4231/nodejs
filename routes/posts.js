@@ -29,11 +29,9 @@ router.post("/posts/:postNum/delete", async (req, res) => {
     const { postNum } = req.params;
     const { password } = req.body;
 
-    console.log(password);
-
     const existPost = await Post.find({password });
     if(!existPost.length){
-        
+        return res.status(400).json({ success: false, errorMessage: " 비밀번호가 다릅니다." });    
     }
         const deletePost = await Post.deleteOne({ postNum: Number(postNum) });
     
