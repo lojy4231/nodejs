@@ -1,6 +1,7 @@
 const express = require("express");
 const Post = require("../models/post");
 const router = express.Router();
+const authMiddleware = require("../middlewares/auth-middleware");
 
 router.get("/", (req, res) => {
     res.send("this is post page")
