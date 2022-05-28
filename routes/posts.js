@@ -1,6 +1,7 @@
 const express = require("express");
-const Post = require("../schemas/post");
+const Post = require("../models/post");
 const router = express.Router();
+const authMiddleware = require("../middlewares/auth-middleware");
 
 router.get("/", (req, res) => {
     res.send("this is post page")
@@ -25,7 +26,7 @@ router.get("/posts/:postNum", async (req, res) => {
     });
 });
 
-router.post("/posts/:postNum/delete", async (req, res) => {
+router.post("/posts/:postNum", async (req, res) => {
     const { postNum } = req.params;
     const { password } = req.body;
 
@@ -54,16 +55,18 @@ router.put("/posts/:postNum", async (req, res) => {
 });
     
 router.post("/posting", async (req, res) => {
-    const { postNum, title, userId, password, date, content } = req.body;
+    const { title, userId, password, date, content } = req.body;
+    const maxPostNum = await Post.findOne().sort("-postNum").exec();
+    let postNum = 1;
 
-    const posts = await Post.find({ postNum });
-    if (posts.length) {
-        return res.status(400).json({ success: false, errorMessage: "이미 있는 데이터 입니다." });
+    if (maxPostNum) {
+        postNum = maxPostNum.postNum +1;
     }
 
-    const createdPost = await Post.create({ postNum, title, userId, password, date, content });
+    const post = new Post({ postNum, title, userId, password, date, content });
+    await post.save();
 
-    res.json({ post: createdPost });
+    res.send({ post });
 });
 
 module.exports = router;
