@@ -1,5 +1,5 @@
 const express = require("express");
-const Post = require("../schemas/post");
+const Post = require("../models/post");
 const router = express.Router();
 
 router.get("/", (req, res) => {
@@ -25,7 +25,7 @@ router.get("/posts/:postNum", async (req, res) => {
     });
 });
 
-router.post("/posts/:postNum/delete", async (req, res) => {
+router.post("/posts/:postNum", async (req, res) => {
     const { postNum } = req.params;
     const { password } = req.body;
 
