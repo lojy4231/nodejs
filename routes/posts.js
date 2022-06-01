@@ -7,16 +7,20 @@ router.get("/", (req, res) => {
     res.send("this is post page")
 });
 
-router.get("/posts", async (req, res) => {
-    const { title } = req.query;
 
-    const posts = await Post.find({ title }, { title:1, userId:1, date:1 }).sort({date: -1});
+// 게시글 조회 (최신 날짜 순으로)
+router.get("/posts", async (req, res) => {
+    const { postNum } = req.query;
+
+    const posts = await Post.find({ postNum }, { title:1, userId:1, date:1 }).sort({date: -1});
 
     res.json({
         posts,
     });
 });
 
+
+// 게시글 상세 조회
 router.get("/posts/:postNum", async (req, res) => {
     const { postNum } = req.params;
 
@@ -26,6 +30,8 @@ router.get("/posts/:postNum", async (req, res) => {
     });
 });
 
+
+// 게시글 삭제
 router.post("/posts/:postNum", async (req, res) => {
     const { postNum } = req.params;
     const { password } = req.body;
@@ -39,6 +45,7 @@ router.post("/posts/:postNum", async (req, res) => {
     res.json({ delete: deletePost });
 });
 
+// 게시글 수정
 router.put("/posts/:postNum", async (req, res) => {
     const { postNum } = req.params;
     const { content } = req.body;
@@ -53,7 +60,9 @@ router.put("/posts/:postNum", async (req, res) => {
 
     res.json({ success: true });
 });
-    
+
+
+// 게시글 작성
 router.post("/posting", async (req, res) => {
     const { title, userId, password, date, content } = req.body;
     const maxPostNum = await Post.findOne().sort("-postNum").exec();
