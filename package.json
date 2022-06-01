@@ -4,6 +4,8 @@
     "express": "^4.18.1",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.3",
+    "moment-timezone": "^0.5.34",
     "mongoose": "^6.3.4"
   },
   "name": "nodejs",
@@ -23,8 +25,5 @@
   "bugs": {
     "url": "https://github.com/lojy4231/nodejs/issues"
   },
-  "homepage": "https://github.com/lojy4231/nodejs#readme",
-  "devDependencies": {
-    "@types/dotenv": "^8.2.0"
-  }
+  "homepage": "https://github.com/lojy4231/nodejs#readme"
 }

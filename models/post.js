@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
+let moment = require('moment-timezone');
+moment.tz.setDefault("Asia/Seoul");
 
 const postSchema = new mongoose.Schema({
-  postNum:{
+  postNum: {
     type: Number,
     requirde: true,
     unique: true,
@@ -22,7 +24,7 @@ const postSchema = new mongoose.Schema({
   },
   date: {
     type: Date,
-    default: Date.now
+    default: moment().format("YYYY-MM-DD hh:mm:ss")
   },
   content: {
     type: String,
